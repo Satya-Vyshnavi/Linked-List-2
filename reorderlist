@@ -1,0 +1,39 @@
+DFS: T.c --> O(n) S.c --> O(1)
+class Solution {
+    public void reorderList(ListNode head) {
+    if(head==null || head.next==null) return;
+      //middle 
+      ListNode slow = head;
+      ListNode fast = head;
+      while(fast!= null && fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+      } 
+      //reverse
+      fast = reverse(slow.next);
+      slow.next = null;
+      ListNode prev = null;    
+      slow = head;      
+      //merge
+      while(fast != null){
+        ListNode temp1 = slow.next;
+        slow.next = fast;        
+        fast= fast.next;
+        slow.next.next = temp1;
+        slow = temp1;        
+      }
+    }
+    public ListNode reverse(ListNode head){
+      if(head == null || head.next == null){
+        return head;
+      }            
+      ListNode prev = null;      
+      while(head != null){
+        ListNode next = head.next;
+        head.next = prev;
+        prev = head;
+        head = next;
+      }
+      return prev;
+    }
+}
